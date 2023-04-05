@@ -1,0 +1,42 @@
+<div *ngIf="errorMessage" class="errorMessage">{{ errorMessage }}</div>
+<form [formGroup]="bookmarkForm" (submit)="addBookmark()">
+  <div class="inputGroup">
+    <label for="title">Bookmark Title</label>
+    <input
+      formControlName="title"
+      placeholder="Title of bookmark"
+      type="text"
+      id="title"
+    />
+  </div>
+  <div class="inputGroup">
+    <label for="url">URL</label>
+    <input
+      formControlName="url"
+      placeholder="Link for bookmark"
+      type="text"
+      id="url"
+    />
+  </div>
+  <div class="inputGroup">
+    <label for="category">Category</label>
+    <select formControlName="categoryId">
+      <option
+        *ngFor="let category of allAvailableCategories; let idx = index"
+        [ngValue]="category.id"
+      >
+        {{ category.name }}
+      </option>
+      <option [ngValue]="9000">Add new category</option>
+    </select>
+  </div>
+  <div *ngIf="addNewCategory" class="inputGroup">
+    <label for="newCategory">Name of category</label>
+    <input
+      type="text"
+      placeholder="Add a new category"
+      formControlName="categoryName"
+    />
+  </div>
+  <button class="submitButton" type="submit">Add</button>
+</form>
