@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -17,17 +17,14 @@ import { isUri } from 'valid-url';
 })
 export class AddBookmarkComponent {
   errorMessage = '';
-  allAvailableCategories: { id: number; name: string }[] = [];
+  @Input() allAvailableCategories: { id: number; name: string }[] = [];
   addNewCategory = false;
-  @Output() newCategory = new EventEmitter<Bookmark>();
+  @Output() newBookmark = new EventEmitter<Bookmark>();
+  @Output() newCategory = new EventEmitter<{ id: number; name: string }>();
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataServiceService
-  ) {
-    this.dataService
-      .getCategory()
-      .subscribe((res) => (this.allAvailableCategories = res));
-  }
+  ) {}
 
   bookmarkForm = this.formBuilder.group(
     {
@@ -70,12 +67,13 @@ export class AddBookmarkComponent {
         this.dataService
           .addCategory(this.bookmarkForm.controls.categoryName.value || '')
           .subscribe((res) => {
+            this.newCategory.emit(res);
             const { title, url } = this.bookmarkForm.value;
             if (title && url)
               this.dataService
                 .create({ title, url, categoryId: res.id })
                 .subscribe((res) => {
-                  this.newCategory.emit(res);
+                  this.newBookmark.emit(res);
                 });
           });
       } else {
@@ -85,7 +83,7 @@ export class AddBookmarkComponent {
           this.dataService
             .create({ title, url, categoryId: categoryId || 0 })
             .subscribe((res) => {
-              this.newCategory.emit(res);
+              this.newBookmark.emit(res);
             });
       }
     } else {

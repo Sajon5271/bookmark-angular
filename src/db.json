@@ -1,4 +1,40 @@
 {
-  "bookmarks": [],
-  "categories": []
+  "bookmarks": [
+    {
+      "title": "asd",
+      "url": "https://www.twitch.tv/videos/1635053561",
+      "categoryId": 2,
+      "id": 3
+    },
+    {
+      "title": "asd",
+      "url": "https://www.twitch.tv/videos/1635053561",
+      "categoryId": 3,
+      "id": 4
+    },
+    {
+      "title": "asdasd",
+      "url": "https://www.projectcode.me/",
+      "categoryId": 4,
+      "id": 6
+    }
+  ],
+  "categories": [
+    {
+      "name": "asdasd",
+      "id": 1
+    },
+    {
+      "name": "asdsa",
+      "id": 2
+    },
+    {
+      "name": "adas",
+      "id": 3
+    },
+    {
+      "name": "P code",
+      "id": 4
+    }
+  ]
 }

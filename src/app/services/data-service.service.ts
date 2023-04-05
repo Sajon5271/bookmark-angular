@@ -14,6 +14,13 @@ export class DataServiceService {
     return this.http.post<Bookmark>(this.baseUrl + '/bookmarks', bookmark);
   }
 
+  getBookmarks(): Observable<Bookmark[]> {
+    return this.http.get<Bookmark[]>(this.baseUrl + '/bookmarks');
+  }
+  deleteBookmarks(id: number) {
+    return this.http.delete(this.baseUrl + '/bookmarks/' + id);
+  }
+
   getCategory(): Observable<{ id: number; name: string }[]> {
     return this.http.get<{ id: number; name: string }[]>(
       this.baseUrl + '/categories'

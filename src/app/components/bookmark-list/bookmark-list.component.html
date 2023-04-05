@@ -1,1 +1,4 @@
-<p>bookmark-list works!</p>
+<li>
+  <a [href]="bookmark.url">{{ bookmark.title }}</a>
+  <button (click)="delete.emit()">Delete</button>
+</li>

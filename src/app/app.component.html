@@ -1,6 +1,29 @@
 <h1>My bookmarks list</h1>
-<app-add-bookmark></app-add-bookmark>
-<ng-container *ngFor="let bookmarks of bookmarkList">
-
-  <app-bookmark-list></app-bookmark-list>
+<ng-container *ngIf="!addNewBookmark; else addBookmarkHtml">
+  <button class="buttonDefault" (click)="addNewBookmark = true">
+    Add new bookmark
+  </button>
 </ng-container>
+<ng-template #addBookmarkHtml>
+  <app-add-bookmark
+    [allAvailableCategories]="categoryList"
+    (newBookmark)="addBookmark($event)"
+    (newCategory)="addCategory($event)"
+  ></app-add-bookmark>
+  <button class="buttonDefault" (click)="addNewBookmark = false">Cancel</button>
+</ng-template>
+<div class="allBookmarks">
+  <div *ngFor="let category of categoryList" class="bookmarkCard">
+    <h3>{{ category.name }}</h3>
+    <div *ngIf="!categorizedBookmarks(category.id).length; else bMarks">
+      No bookmarks for this category
+    </div>
+    <ng-template #bMarks>
+      <app-bookmark-list
+        *ngFor="let bookmark of categorizedBookmarks(category.id)"
+        (delete)="deleteBookmark(bookmark.id)"
+        [bookmark]="bookmark"
+      ></app-bookmark-list>
+    </ng-template>
+  </div>
+</div>
